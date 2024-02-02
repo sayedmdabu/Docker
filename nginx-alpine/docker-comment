@@ -1,0 +1,30 @@
+Docker Image
+docker build -t nginx-alpine-image .
+docker images
+docker rmi <image-name>
+
+Docker Container
+docker run -it -d -p 80:80 --name alpinecon nginx-alpine-image
+docker ps -a
+docler ps
+docker rm <container-name>
+docker container inspect <container-name>
+
+
+Docker Volume
+docker volume create <name>
+docker volume create batman
+docker volume ls
+docker volume inspect batman
+docker volume rm batman
+docker volume prune // this will remove all local volume not used by al least one container
+
+
+docker run -it -d -p 8080:80 --name ConA --mount source=cona,target=/apps nginx-alpine-image
+OR
+docker run -it -d -p 8888:80 --name CoC --volume conc:/apps nginx-alpine-image
+
+read only volume
+docker run -it -d -p 8080:80 --name ConD --mount source=cond,target=/apps,readonly nginx-alpine-image
+
+
