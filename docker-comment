@@ -27,4 +27,23 @@ docker run -it -d -p 8888:80 --name CoC --volume conc:/apps nginx-alpine-image
 read only volume
 docker run -it -d -p 8080:80 --name ConD --mount source=cond,target=/apps,readonly nginx-alpine-image
 
+bind mount:
+docker run -it -d --name ConE --mount type=bind,source=$(pwd)/bind-mount,target=/apps ubuntu
 
+
+docker exec -it <container-name>  bash
+docker exec -it ConE  bash
+
+
+Docker Network:
+
+docker network create --driver <driver> <name>
+
+docker network create --driver bridge barbie
+
+docker network ls
+docker network inspect <id/name>
+
+docker run -it -d --name defaultcontainer ubuntu
+
+docker run -it -d --network barbie --name networkbridgecontainer ubuntu
