@@ -1,0 +1,21 @@
+version: '3'
+networks:
+  batman:
+    driver: bridge
+
+services:
+  web:
+    image: "nginx:latest"
+    ports:
+      - "5000:5000"
+    networks:
+      - batman
+  database:
+    image: "mysql"
+    networks:
+      - batman
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data: {}
