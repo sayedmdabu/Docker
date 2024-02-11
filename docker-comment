@@ -47,3 +47,13 @@ docker network inspect <id/name>
 docker run -it -d --name defaultcontainer ubuntu
 
 docker run -it -d --network barbie --name networkbridgecontainer ubuntu
+
+
+Host network:
+
+docker run -it -d --network host --name mycon nginx:latest
+
+Docker Swarm
+docker swarm init
+
+
