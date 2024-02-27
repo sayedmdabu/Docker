@@ -22,7 +22,7 @@ services:
       SERVICE_TAGS: dev
     working_dir: /var/www
     volumes:
-      - ./src:/var/www
+      - ./blog:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
@@ -53,7 +53,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ./src:/var/www
+      - ./blog:/var/www
       - ./nginx/conf:/etc/nginx/conf.d
     ports:
       - "8802:80"  # Adjust port if needed

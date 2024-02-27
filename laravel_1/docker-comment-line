@@ -1,0 +1,28 @@
+
+docker rm -f $(docker ps -qa)
+docker rmi -f $(docker images -aq)
+
+docker-compose build
+docker-compose up -d
+docker-compose down
+
+docker-compose [OPTIONS] exec [SERVICE NAME] [COMMAND]
+
+docker-compose exec -T app composer install
+docker-compose exec -T app composer install
+
+docker-compose exec -T app cp .env.example .env
+docker-compose exec -T app php artisan key:generate
+
+.env
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel8
+DB_USERNAME=laravel8
+DB_PASSWORD=123456
+
+docker-compose exec -T app php artisan config:clear
+docker-compose exec -T app php artisan optimize:clear
+
+docker-compose exec -T app php artisan migrate

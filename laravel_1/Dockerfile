@@ -1,11 +1,17 @@
 # Use Alpine Linux as base image
 FROM php:8.2-fpm-alpine
 
-# Copy composer.lock and composer.json
-COPY src/composer.lock src/composer.json /var/www/
-
 # Set working directory
 WORKDIR /var/www
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy composer.lock and composer.json
+COPY blog/composer.lock blog/composer.json ./
+
+# Install Composer dependencies
+# RUN blog/composer install --no-dev --optimize-autoloader
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
@@ -32,20 +38,23 @@ RUN rm -rf /var/cache/apk/*
 # Install PHP extensions
 RUN docker-php-ext-install bcmath pdo_mysql mbstring zip exif pcntl gd
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # Add user for Laravel application
 RUN addgroup -g 1000 www && adduser -u 1000 -D -G www www
 
 # Copy existing application directory contents
-COPY . /var/www
+COPY blog ./
 
-# Install Composer dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Change ownership of the storage directory to the web server user
+RUN chown -R www-data:www-data /var/www/storage
 
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
+# Ensure the storage/logs directory is writable
+RUN chmod -R 775 /var/www/storage/logs
+
+# Change permissions
+# RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Change logs permissions
+# RUN chown -R www-data:www-data storage logs/cache
 
 # Change current user to www
 USER www
