@@ -16,3 +16,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+use Illuminate\Support\Facades\Redis;
+
+Route::get('/store', function() {
+    Redis::set('foo', 'Docker use Redis in laravel, mysql, phpmyadmin, mailhog, Nginx, PHP-8.2, alpine os');
+    return redirect()->route('retrieve');
+});
+
+Route::get('/retrieve', function() {
+    return Redis::get('foo');
+})->name('retrieve');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

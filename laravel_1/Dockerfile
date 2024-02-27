@@ -1,6 +1,9 @@
 # Use Alpine Linux as base image
 FROM php:8.2-fpm-alpine
 
+# Install Node.js and npm
+RUN apk add --no-cache nodejs npm
+
 # Set working directory
 WORKDIR /var/www
 
