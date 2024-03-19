@@ -1,6 +1,8 @@
 
 docker rm -f $(docker ps -qa)
 docker rmi -f $(docker images -aq)
+docker volume rm $(docker volume ls -q)
+docker network prune
 
 docker-compose build
 docker-compose up -d
