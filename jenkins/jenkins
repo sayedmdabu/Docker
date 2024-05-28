@@ -1,0 +1,4 @@
+docker pull jenkins/jenkins
+
+docker run -d --name jenkins-server-docker -p 8080:8080 jenkins/jenkins:latest
+
